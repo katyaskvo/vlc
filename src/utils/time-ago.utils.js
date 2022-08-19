@@ -1,5 +1,7 @@
 export const timeAgo = (lastFetch) => {
-	const secondsAgo = Math.floor((new Date() - new Date(lastFetch)) / 1000);
+	const lastFetchDate = new Date(lastFetch);
+	const timeNow = new Date();
+	const secondsAgo = Math.floor((timeNow - lastFetchDate) / 1000);
 
 	let interval = secondsAgo / (3600 * 24 * 365);
 	if (interval >= 1) {
@@ -27,7 +29,8 @@ export const timeAgo = (lastFetch) => {
 	interval = secondsAgo / 60;
 	if (interval >= 1) {
 		console.log(`${Math.floor(interval)} minutes ago`);
-		return `${Math.floor(interval)} ${interval > 1 ? 'minutes' : 'minute'} ago`;
+		return `${Math.floor(interval)} min ago`;
 	}
-	return `${Math.floor(interval)} ${secondsAgo > 1 ? 'seconds' : 'second'} ago`;
+
+	return `${Math.floor(interval)} sec ago`;
 };
