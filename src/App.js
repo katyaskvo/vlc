@@ -1,5 +1,5 @@
 import './App.scss';
-import ReconciliationComponent from './components/reconciliation/reconciliation';
+import ReconciliationComponent from './components/reconciliation/reconciliation.component';
 
 function App() {
 	return (

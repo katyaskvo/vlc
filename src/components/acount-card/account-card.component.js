@@ -1,5 +1,6 @@
-import './account-card.component.styles.scss';
+import './account-card.styles.scss';
 import { ReactComponent as SpreadsheetIcon } from '../../assets/g-sheet-icon.svg';
+import { timeAgo } from '../../utils/time-ago.utils';
 
 const AccountCard = ({ accountData, balanceData }) => {
 	const {
@@ -7,8 +8,7 @@ const AccountCard = ({ accountData, balanceData }) => {
 		disabled_start: disabledStart,
 		last_fetched: lastFetch,
 	} = accountData;
-
-	console.log(accountData, balanceData);
+	const timeAgoString = timeAgo(lastFetch);
 
 	return (
 		<div className="card-wrapper">
@@ -24,23 +24,27 @@ const AccountCard = ({ accountData, balanceData }) => {
 						) : (
 							<span className="connected">Connected</span>
 						)}
-						<span className="last-refresh">Last Refresh: {}</span>
+						<span className="last-refresh">Last Refresh: {timeAgoString}</span>
 					</p>
 				</div>
 				<div className="card-togggle">{`<`}</div>
 			</div>
 			<div>
 				<table>
-					<th>
-						<td></td>
-						<td></td>
-						<td></td>
-					</th>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
+					<thead>
+						<tr>
+							<th></th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+					</tbody>
 				</table>
 			</div>
 		</div>
