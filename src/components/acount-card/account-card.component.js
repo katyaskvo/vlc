@@ -48,17 +48,31 @@ const AccountCard = ({ accountData, balanceData = {} }) => {
 						{Object.keys(balanceData).length > 0 && (
 							<tr>
 								<td>
-									{glBalance < 0 ? `-$${glBalance * -1}` : `$${glBalance}`}
+									{glBalance.toLocaleString('en-US', {
+										style: 'currency',
+										currency: 'USD',
+									})}
 								</td>
 								<td>
-									{recBalance < 0 ? `-$${recBalance * -1}` : `$${recBalance}`}
+									{recBalance.toLocaleString('en-US', {
+										style: 'currency',
+										currency: 'USD',
+									})}
 								</td>
-								<td></td>
+								<td
+									style={{
+										color: glBalance - recBalance !== 0 ? '#C70707' : '#0F9D58',
+									}}
+								>
+									{(Math.round((glBalance - recBalance) * 100) / 100).toFixed(
+										2
+									)}
+								</td>
 							</tr>
 						)}
 						{!Object.keys(balanceData).length && (
 							<tr>
-								<td className="no-balance-data" colspan="3">
+								<td className="no-balance-data" colSpan="3">
 									Data is not available.
 								</td>
 							</tr>
