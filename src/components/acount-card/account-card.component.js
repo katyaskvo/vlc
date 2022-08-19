@@ -16,6 +16,19 @@ const AccountCard = ({ accountData, balanceData = {} }) => {
 	} = balanceData;
 	const timeAgoString = timeAgo(lastFetch);
 
+	const calculateVariancePercentage = () => {
+		let percentage = ((glBalance - recBalance) / glBalance) * 100; //calculate percentage
+
+		//check if not infinite
+		if (isFinite(percentage)) {
+			percentage = (Math.round(percentage * 100) / 100).toFixed(1); //round percentage value to 1 decimal
+			return `(${percentage}%)`;
+		} else {
+			//if infinite don't display percentage
+			return '';
+		}
+	};
+
 	return (
 		<div className="card-wrapper">
 			<div className="card-account-info">
@@ -66,7 +79,8 @@ const AccountCard = ({ accountData, balanceData = {} }) => {
 								>
 									{(Math.round((glBalance - recBalance) * 100) / 100).toFixed(
 										2
-									)}
+									)}{' '}
+									{calculateVariancePercentage()}
 								</td>
 							</tr>
 						)}
