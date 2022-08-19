@@ -2,12 +2,18 @@ import './account-card.styles.scss';
 import { ReactComponent as SpreadsheetIcon } from '../../assets/g-sheet-icon.svg';
 import { timeAgo } from '../../utils/time-ago.utils';
 
-const AccountCard = ({ accountData, balanceData }) => {
+const AccountCard = ({ accountData, balanceData = {} }) => {
 	const {
 		name,
 		disabled_start: disabledStart,
 		last_fetched: lastFetch,
 	} = accountData;
+	console.log(balanceData);
+
+	const {
+		gl_balance: glBalance = undefined,
+		rec_balance: recBalance = undefined,
+	} = balanceData;
 	const timeAgoString = timeAgo(lastFetch);
 
 	return (
@@ -29,21 +35,34 @@ const AccountCard = ({ accountData, balanceData }) => {
 				</div>
 				<div className="card-togggle">{`<`}</div>
 			</div>
-			<div>
+			<div className="balance-table">
 				<table>
 					<thead>
 						<tr>
-							<th></th>
-							<th></th>
-							<th></th>
+							<th>GL Balance</th>
+							<th>Rec. Balance</th>
+							<th>Variance</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
+						{Object.keys(balanceData).length > 0 && (
+							<tr>
+								<td>
+									{glBalance < 0 ? `-$${glBalance * -1}` : `$${glBalance}`}
+								</td>
+								<td>
+									{recBalance < 0 ? `-$${recBalance * -1}` : `$${recBalance}`}
+								</td>
+								<td></td>
+							</tr>
+						)}
+						{!Object.keys(balanceData).length && (
+							<tr>
+								<td className="no-balance-data" colspan="3">
+									Data is not available.
+								</td>
+							</tr>
+						)}
 					</tbody>
 				</table>
 			</div>
