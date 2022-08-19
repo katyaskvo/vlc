@@ -1,0 +1,80 @@
+$color-red: #C70707;
+$color-green: #0F9D58;
+$icon-width: 30px;
+$icon-container-width: 62px;
+$toggle-width: 32px;
+$toggle-container-width: 70px;
+.card-wrapper {
+    height: 48px;
+    border: 1px solid #E8ECEF;
+    border-radius: 8px;
+    .card-account-info {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 8px 0;
+        .card-spreadsheet-icon {
+            flex: 0 0 $icon-container-width;   
+            display: block;
+            padding: 0 14px 0 18px;
+            box-sizing: border-box;
+            width: $icon-width;
+            height: $icon-width;
+            svg {
+                width: $icon-width;
+                height: $icon-width;
+            }
+        }
+        .card-togggle {
+            flex: 0 0 $toggle-width;
+            padding-left: 14px;
+        }
+        .card-info {
+            flex: 1 1 auto;
+            max-width: calc(100% - $icon-container-width - $toggle-container-width);
+            h5, p {
+                font-size: 12px;
+                margin: 0;
+            }
+            h5 {
+                font-weight: 500;
+                color: #344054;
+                padding-bottom: 3px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            p {
+                font-weight: 400;
+                color: #667085;
+            }
+            .connected, .disconnected {
+                position: relative;
+                margin-right: 8px;
+                &:before {
+                    content: '';
+                    display: inline-block;
+                    height: 8px;
+                    width: 8px;
+                    border-radius: 50%;
+                    top: 0;
+                    left: 0;
+                    margin-right: 5px;
+                }
+            }
+            .connected {
+                color: $color-green;
+                &::before {
+                    background-color: $color-green;
+                }
+            }
+            .disconnected {
+                color: $color-red;
+                &::before {
+                    background-color: $color-red;
+                }
+            }
+        }
+    }
+}
