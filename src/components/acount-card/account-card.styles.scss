@@ -5,9 +5,6 @@ $icon-container-width: 62px;
 $toggle-width: 32px;
 $toggle-container-width: 70px;
 .card-wrapper {
-    height: 48px;
-
-    height: 125px;
     border: 1px solid #E8ECEF;
     border-radius: 8px;
     .card-account-info {
@@ -31,6 +28,15 @@ $toggle-container-width: 70px;
         .card-togggle {
             flex: 0 0 $toggle-width;
             padding-left: 14px;
+            .caret-button {
+                height: 32px;
+                width: 32px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border: none;
+                background:none;
+            }
         }
         .card-info {
             flex: 1 1 auto;

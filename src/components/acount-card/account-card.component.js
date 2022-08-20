@@ -1,14 +1,16 @@
 import './account-card.styles.scss';
+import { useState } from 'react';
 import { ReactComponent as SpreadsheetIcon } from '../../assets/g-sheet-icon.svg';
+import { ReactComponent as CaretIcon } from '../../assets/caret.svg';
 import { timeAgo } from '../../utils/time-ago.utils';
 
 const AccountCard = ({ accountData, balanceData = {} }) => {
+	const [isExpanded, setIsExpanded] = useState(false);
 	const {
 		name,
 		disabled_start: disabledStart,
 		last_fetched: lastFetch,
 	} = accountData;
-	console.log(balanceData);
 
 	const {
 		gl_balance: glBalance = undefined,
@@ -16,11 +18,29 @@ const AccountCard = ({ accountData, balanceData = {} }) => {
 	} = balanceData;
 	const timeAgoString = timeAgo(lastFetch);
 
+	const toggleExpandCollapse = (e) => {
+		e.preventDefault();
+		setIsExpanded(!isExpanded);
+	};
+
+	const calculateVariancePercentage = () => {
+		let percentage = ((glBalance - recBalance) / glBalance) * 100; //calculate percentage
+
+		//check if not infinite
+		if (isFinite(percentage)) {
+			percentage = (Math.round(percentage * 100) / 100).toFixed(1); //round percentage value to 1 decimal
+			return `(${percentage}%)`;
+		} else {
+			//if infinite don't display percentage
+			return '';
+		}
+	};
+
 	return (
 		<div className="card-wrapper">
 			<div className="card-account-info">
 				<div className="card-spreadsheet-icon">
-					<SpreadsheetIcon></SpreadsheetIcon>
+					<SpreadsheetIcon />
 				</div>
 				<div className="card-info">
 					<h5>{name}</h5>
@@ -33,9 +53,20 @@ const AccountCard = ({ accountData, balanceData = {} }) => {
 						<span className="last-refresh">Last Refresh: {timeAgoString}</span>
 					</p>
 				</div>
-				<div className="card-togggle">{`<`}</div>
+				<div className="card-togggle">
+					<button
+						className="caret-button"
+						onClick={toggleExpandCollapse}
+						style={{ transform: isExpanded ? 'rotate(-90deg)' : '' }}
+					>
+						<CaretIcon />
+					</button>
+				</div>
 			</div>
-			<div className="balance-table">
+			<div
+				className="balance-table"
+				style={{ display: isExpanded ? 'block' : 'none' }}
+			>
 				<table>
 					<thead>
 						<tr>
@@ -66,7 +97,8 @@ const AccountCard = ({ accountData, balanceData = {} }) => {
 								>
 									{(Math.round((glBalance - recBalance) * 100) / 100).toFixed(
 										2
-									)}
+									)}{' '}
+									{calculateVariancePercentage()}
 								</td>
 							</tr>
 						)}
